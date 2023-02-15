@@ -1,0 +1,33 @@
+To convert video to mp3 and increase volume by 2x and add fade in and fadeout effect using ffmpeg in Android Studio programmatically, you can use the following code:
+
+First, add the following dependencies to your app-level build.gradle file:
+
+python
+Copy code
+implementation 'com.arthenica:mobile-ffmpeg-full-gpl:4.4.LTS'
+implementation 'com.arthenica:mobile-ffmpeg-full-gpl:4.4.LTS'
+Then, use the following code to convert the video to mp3, increase the volume by 2x, and add fade in and fadeout effect:
+
+java
+Copy code
+String[] command = {"-i", inputFilePath, "-vn", "-acodec", "libmp3lame", "-b:a", "128k", "-filter:a", "volume=2.0,afade=t=in:st=0:d=3,afade=t=out:st=" + (duration - 3) + ":d=3", "-y", outputFilePath};
+
+FFmpeg.executeAsync(command, new ExecuteCallback() {
+    @Override
+    public void apply(final long executionId, final int returnCode) {
+        if (returnCode == RETURN_CODE_SUCCESS) {
+            // Conversion successful
+        } else if (returnCode == RETURN_CODE_CANCEL) {
+            // Conversion cancelled
+        } else {
+            // Conversion failed
+        }
+    }
+});
+Here, inputFilePath is the path of the input video file, outputFilePath is the path of the output mp3 file, and duration is the duration of the input video file in seconds.
+
+The -vn option tells ffmpeg to strip the video stream from the output, -acodec libmp3lame tells it to use the libmp3lame audio codec to encode the output as mp3, -b:a 128k sets the audio bitrate to 128kbps, volume=2.0 increases the volume by 2x, afade=t=in:st=0:d=3 sets a fade in effect for the first 3 seconds, and afade=t=out:st=(duration - 3):d=3 sets a fade out effect for the last 3 seconds.
+
+The FFmpeg.executeAsync method runs the ffmpeg command asynchronously and provides a callback to handle the execution result. The RETURN_CODE_SUCCESS value indicates successful execution, RETURN_CODE_CANCEL indicates that the execution was cancelled, and any other value indicates that the execution failed.
+
+Note that this code assumes that the input video file is valid and that the necessary permissions are granted. You may need to handle error cases and request permissions before running the ffmpeg command.
