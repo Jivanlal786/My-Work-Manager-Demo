@@ -1,0 +1,300 @@
+how to send notification even app is closed in androidstudio programatically
+To send notifications even when the app is closed in an Android app, you need to create a background service that runs independently of the app's lifecycle. Here are the general steps to achieve this:
+
+Create a new service class that extends the Android Service class. In this class, you'll define the logic for sending notifications.
+
+In your app's AndroidManifest.xml file, declare your service class as a service component.
+
+Start the service from your app's main activity or any other relevant activity using an Intent.
+
+In the service, use the NotificationManager class to create and send notifications to the user.
+
+Here's some sample code to give you an idea of what this might look like:
+
+First, create a new service class:
+
+public class MyNotificationService extends Service {
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // TODO: Implement logic for sending notifications
+        return START_STICKY;
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // We don't need to bind to this service, so just return null
+        return null;
+    }
+}
+
+Next, declare your service component in the AndroidManifest.xml file:
+
+<service android:name=".MyNotificationService" />
+
+To start the service from your app's main activity, you can use the following code:
+
+Intent intent = new Intent(this, MyNotificationService.class);
+startService(intent);
+
+Finally, in your service's onStartCommand method, you can use the NotificationManager class to create and send notifications:
+
+public class MyNotificationService extends Service {
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // Create a notification
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "my_channel")
+            .setSmallIcon(R.drawable.notification_icon)
+            .setContentTitle("My notification")
+            .setContentText("Hello World!")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        // Send the notification
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(0, builder.build());
+
+        return START_STICKY;
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+}
+
+*************************************************************************************************
+how to send notification daily at 9am even when app is closed in android programatically
+
+
+To send a notification daily at 9 am, even when the app is closed in Android, you need to create a scheduled background task that runs independently of the app's lifecycle. Here are the general steps to achieve this:
+
+Create a new service class that extends the Android Service class. In this class, you'll define the logic for sending notifications.
+
+In your app's AndroidManifest.xml file, declare your service class as a service component.
+
+In the service, use the AlarmManager class to schedule a PendingIntent that will trigger your service at 9 am every day.
+
+In the service, use the NotificationManager class to create and send notifications to the user.
+
+Here's some sample code to give you an idea of what this might look like:
+
+First, create a new service class:
+
+public class MyNotificationService extends Service {
+    private static final int NOTIFICATION_ID = 1;
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // Get the current time
+        Calendar calendar = Calendar.getInstance();
+        int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+
+        // Check if it's 9 am yet
+        if (hourOfDay == 9) {
+            // Create a notification
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "my_channel")
+                    .setSmallIcon(R.drawable.notification_icon)
+                    .setContentTitle("My notification")
+                    .setContentText("Hello World!")
+                    .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+            // Send the notification
+            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            notificationManager.notify(NOTIFICATION_ID, builder.build());
+        }
+
+        return START_STICKY;
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+}
+
+Next, declare your service component in the AndroidManifest.xml file:
+
+<service android:name=".MyNotificationService" />
+
+To schedule the daily notification, you can use the following code:
+
+// Get the current time
+Calendar calendar = Calendar.getInstance();
+calendar.set(Calendar.HOUR_OF_DAY, 9);
+calendar.set(Calendar.MINUTE, 0);
+calendar.set(Calendar.SECOND, 0);
+
+// Create a PendingIntent for the MyNotificationService
+Intent intent = new Intent(this, MyNotificationService.class);
+PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+// Schedule the PendingIntent to trigger at 9 am every day
+AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
+Note that this code should be run in the onCreate method of your app's main activity or another appropriate activity, and that you'll need to customize the notification to suit your needs.
+
+******************************************************************************************************
+receive broadcast even if app is closed in android programatically
+
+To receive a broadcast even if the app is closed in Android, you need to create a BroadcastReceiver and register it dynamically in your code, rather than in the AndroidManifest.xml file. Here are the general steps to achieve this:
+
+Create a new BroadcastReceiver class that extends the Android BroadcastReceiver class. In this class, you'll define the logic for handling the broadcast.
+
+In your app's code (e.g. in the onCreate method of your app's main activity), create a new instance of your BroadcastReceiver class and register it using the registerReceiver method.
+
+In the BroadcastReceiver, implement the onReceive method to handle the broadcast.
+
+Here's some sample code to give you an idea of what this might look like:
+
+First, create a new BroadcastReceiver class:
+
+public class MyBroadcastReceiver extends BroadcastReceiver {
+    private static final String TAG = "MyBroadcastReceiver";
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Log.d(TAG, "Received broadcast");
+
+        // TODO: Implement logic for handling the broadcast
+    }
+}
+
+Next, in your app's code, create a new instance of your BroadcastReceiver class and register it using the registerReceiver method:
+
+// Create a new instance of the BroadcastReceiver
+MyBroadcastReceiver myReceiver = new MyBroadcastReceiver();
+
+// Register the BroadcastReceiver to receive the "my_action" broadcast
+IntentFilter intentFilter = new IntentFilter("my_action");
+registerReceiver(myReceiver, intentFilter);
+
+
+Finally, in the BroadcastReceiver, implement the onReceive method to handle the broadcast:
+
+public class MyBroadcastReceiver extends BroadcastReceiver {
+    private static final String TAG = "MyBroadcastReceiver";
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        Log.d(TAG, "Received broadcast");
+
+        // TODO: Implement logic for handling the broadcast
+    }
+}
+
+
+To send a broadcast to your BroadcastReceiver, you can use the following code:
+
+// Create a new Intent with the "my_action" action
+Intent intent = new Intent("my_action");
+
+// Send the broadcast
+sendBroadcast(intent);
+
+Note that this code should be run from your app's code (e.g. from a button click handler), rather than from the AndroidManifest.xml file. Also note that the BroadcastReceiver will only receive broadcasts while your app is running or until you unregister it using the unregisterReceiver method.
+
+****************************************************************************************************************
+start background service if our app is not started or not in foreground in android
+
+To start a background service even if your app is not started or running in the foreground in Android, you need to create a service component and start it from a BroadcastReceiver that is declared in your app's AndroidManifest.xml file. Here are the general steps to achieve this:
+
+Create a new service class that extends the Android Service class. In this class, you'll define the logic for the background service.
+
+In your app's AndroidManifest.xml file, declare your service class as a service component.
+
+Create a new BroadcastReceiver class that extends the Android BroadcastReceiver class. In this class, you'll define the logic for starting the background service.
+
+In your app's AndroidManifest.xml file, declare your BroadcastReceiver class as a broadcast receiver component and specify the intent filter for the broadcast message that will trigger the background service.
+
+In the onReceive method of your BroadcastReceiver class, start the background service using an Intent.
+
+Here's some sample code to give you an idea of what this might look like:
+
+First, create a new service class:
+
+java
+Copy code
+public class MyBackgroundService extends Service {
+    private static final String TAG = "MyBackgroundService";
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // Implement your logic for the background service here
+        Log.d(TAG, "Background service started");
+        return START_STICKY;
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+}
+
+To start a background service even if your app is not started or running in the foreground in Android, you need to create a service component and start it from a BroadcastReceiver that is declared in your app's AndroidManifest.xml file. Here are the general steps to achieve this:
+
+Create a new service class that extends the Android Service class. In this class, you'll define the logic for the background service.
+
+In your app's AndroidManifest.xml file, declare your service class as a service component.
+
+Create a new BroadcastReceiver class that extends the Android BroadcastReceiver class. In this class, you'll define the logic for starting the background service.
+
+In your app's AndroidManifest.xml file, declare your BroadcastReceiver class as a broadcast receiver component and specify the intent filter for the broadcast message that will trigger the background service.
+
+In the onReceive method of your BroadcastReceiver class, start the background service using an Intent.
+
+Here's some sample code to give you an idea of what this might look like:
+
+First, create a new service class:
+
+java
+Copy code
+public class MyBackgroundService extends Service {
+    private static final String TAG = "MyBackgroundService";
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        // Implement your logic for the background service here
+        Log.d(TAG, "Background service started");
+        return START_STICKY;
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
+    }
+}
+Next, declare your service component in the AndroidManifest.xml file:
+
+
+<service android:name=".MyBackgroundService" />
+Now, create a new BroadcastReceiver class:
+
+
+
+public class MyBroadcastReceiver extends BroadcastReceiver {
+    private static final String TAG = "MyBroadcastReceiver";
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        // Start the background service
+        Intent serviceIntent = new Intent(context, MyBackgroundService.class);
+        context.startService(serviceIntent);
+        Log.d(TAG, "Started background service");
+    }
+}
+
+Next, declare your BroadcastReceiver component in the AndroidManifest.xml file:
+
+
+<receiver android:name=".MyBroadcastReceiver">
+    <intent-filter>
+        <action android:name="android.intent.action.BOOT_COMPLETED" />
+    </intent-filter>
+</receiver>
+
+
+In this example, we're registering our BroadcastReceiver to receive the BOOT_COMPLETED broadcast message, which is sent when the device finishes booting. You'll need to replace this with the appropriate action for the broadcast message that will trigger your background service.
+
+Finally, in the onReceive method of your BroadcastReceiver class, you can start the background service using an Intent. Note that starting a service from a BroadcastReceiver requires using an explicit Intent that specifies the component name of the service.
+
+Keep in mind that starting a background service can have a significant impact on battery life, so you should carefully consider whether a background service is necessary for your app's functionality. Additionally, starting a service from a BroadcastReceiver can also have security implications, so you should ensure that your app is not vulnerable to attacks such as clickjacking or tapjacking.
