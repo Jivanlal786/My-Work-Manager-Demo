@@ -1,0 +1,48 @@
+// 1. Show view
+    private void showCustomPopupMenu()
+    {
+        windowManager = (WindowManager)getSystemService(WINDOW_SERVICE);
+        // LayoutInflater layoutInflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        // View view = layoutInflater.inflate(R.layout.dummy_layout, null);
+        ViewGroup valetModeWindow = (ViewGroup) View.inflate(this, R.layout.dummy_layout, null);
+        int LAYOUT_FLAG;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY;
+        } else {
+            LAYOUT_FLAG = WindowManager.LayoutParams.TYPE_PHONE;
+        }
+        WindowManager.LayoutParams params=new WindowManager.LayoutParams(
+                WindowManager.LayoutParams.MATCH_PARENT,
+                WindowManager.LayoutParams.MATCH_PARENT,
+                LAYOUT_FLAG,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+                PixelFormat.TRANSLUCENT);
+
+        params.gravity= Gravity.CENTER;
+        params.x=0;
+        params.y=0;
+        windowManager.addView(valetModeWindow, params);
+    }
+
+ TextView tvHello;
+ WindowManager windowManager;
+
+ tvHello = findViewById(R.id.tv_hello);
+
+        tvHello.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) {
+                // Start the overlay service
+                // 2. Get permissions by asking
+                if (!Settings.canDrawOverlays(MainActivity.this)) {
+                    Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName()));
+                    startActivityForResult(intent, 1234);
+                }else {
+//                    showCustomPopupMenu();
+                }
+                Intent intent = new Intent(MainActivity.this, OverlayService.class);
+                startService(intent);
+
+            }
+        });
