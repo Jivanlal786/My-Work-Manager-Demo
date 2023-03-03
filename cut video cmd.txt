@@ -1,0 +1,224 @@
+﻿String[] cmd = {"-i", "input.mp4", "-ss", "00:00:10", "-to", "00:00:20", "-vf", "fade=in:0:30", "-af", "afade=t=in:ss=0:d=3", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "output.mp4"};
+
+Trim and fade video. 
+
+
+
+How to trim video and add fade in effect to its audio using ffmpeg in android studio?
+
+To trim a video and add a fade-in effect to its audio using ffmpeg in Android Studio, you can use the following command:
+
+javascript
+Copy code
+String[] cmd = {"-i", "input.mp4", "-ss", "00:00:10", "-to", "00:00:20", "-vf", "fade=in:0:30", "-af", "afade=t=in:ss=0:d=3", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "output.mp4"};
+Here is a breakdown of the command:
+
+-i: Specifies the input file.
+-ss: Specifies the start time of the trimmed video.
+-to: Specifies the end time of the trimmed video.
+-vf: Specifies the video filter. fade=in:0:30 creates a fade-in effect for the video.
+-af: Specifies the audio filter. afade=t=in:ss=0:d=3 creates a fade-in effect for the audio. ss specifies the start time of the fade-in effect, and d specifies the duration.
+-c:v: Specifies the video codec. copy copies the video codec from the input file.
+-c:a: Specifies the audio codec. aac specifies the AAC audio codec.
+-b:a: Specifies the audio bitrate. 256k specifies a bitrate of 256 kbps.
+output.mp4: Specifies the output file.
+To execute this command in Android Studio, you can use the following code:
+
+String[] cmd = {"-i", "input.mp4", "-ss", "00:00:10", "-to", "00:00:20", "-vf", "fade=in:0:30", "-af", "afade=t=in:ss=0:d=3", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "output.mp4"};
+
+try {
+    FFmpeg.execute(cmd);
+} catch (FFmpegCommandAlreadyRunningException e) {
+    // Handle the exception
+}
+This code assumes that you have already set up FFmpeg in your Android Studio project. If you haven't, you can refer to the FFmpeg documentation for Android to learn how to do it.
+
+
+
+**********************************************************
+
+Trim and fade video.
+
+
+How to trim video and add fade in effect to its audio using ffmpeg in android studio?
+
+To trim a video and add a fade-in effect to its audio using ffmpeg in Android Studio, you can use the following command:
+
+javascript
+Copy code
+String[] cmd = {"-i", "input.mp4", "-ss", "00:00:10", "-to", "00:00:20", "-vf", "fade=in:0:30", "-af", "afade=t=in:ss=0:d=3", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "output.mp4"};
+Here is a breakdown of the command:
+
+-i: Specifies the input file.
+-ss: Specifies the start time of the trimmed video.
+-to: Specifies the end time of the trimmed video.
+-vf: Specifies the video filter. fade=in:0:30 creates a fade-in effect for the video.
+-af: Specifies the audio filter. afade=t=in:ss=0:d=3 creates a fade-in effect for the audio. ss specifies the start time of the fade-in effect, and d specifies the duration.
+-c:v: Specifies the video codec. copy copies the video codec from the input file.
+-c:a: Specifies the audio codec. aac specifies the AAC audio codec.
+-b:a: Specifies the audio bitrate. 256k specifies a bitrate of 256 kbps.
+output.mp4: Specifies the output file.
+To execute this command in Android Studio, you can use the following code:
+
+javascript
+Copy code
+String[] cmd = {"-i", "input.mp4", "-ss", "00:00:10", "-to", "00:00:20", "-vf", "fade=in:0:30", "-af", "afade=t=in:ss=0:d=3", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "output.mp4"};
+
+try {
+    FFmpeg.execute(cmd);
+} catch (FFmpegCommandAlreadyRunningException e) {
+    // Handle the exception
+}
+This code assumes that you have already set up FFmpeg in your Android Studio project. If you haven't, you can refer to the FFmpeg documentation for Android to learn how to do it.
+
+
+------------------------------------------------------------------------------------------------------
+
+
+How to cut video and apply fadein and fadeout effect only to its audio using ffmpeg in android studio?
+
+To cut a video and apply fade-in and fade-out effects only to its audio using ffmpeg in Android Studio, you can use the following command:
+
+javascript
+Copy code
+String[] cmd = {"-i", "input.mp4", "-ss", "00:00:10", "-to", "00:00:20", "-map", "0:v", "-map", "0:a", "-af", "afade=t=in:st=0:d=3,afade=t=out:st=17:d=3", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "output.mp4"};
+Here is a breakdown of the command:
+
+-i: Specifies the input file.
+-ss: Specifies the start time of the trimmed video.
+-to: Specifies the end time of the trimmed video.
+-map: Specifies which streams to include in the output. -map 0:v includes the video stream from the input file, and -map 0:a includes the audio stream from the input file.
+-af: Specifies the audio filter. afade=t=in:st=0:d=3 creates a fade-in effect for the audio starting at 0 seconds and lasting 3 seconds, and afade=t=out:st=17:d=3 creates a fade-out effect for the audio starting at 17 seconds and lasting 3 seconds.
+-c:v: Specifies the video codec. copy copies the video codec from the input file.
+-c:a: Specifies the audio codec. aac specifies the AAC audio codec.
+-b:a: Specifies the audio bitrate. 256k specifies a bitrate of 256 kbps.
+output.mp4: Specifies the output file.
+To execute this command in Android Studio, you can use the following code:
+
+String[] cmd = {"-i", "input.mp4", "-ss", "00:00:10", "-to", "00:00:20", "-map", "0:v", "-map", "0:a", "-af", "afade=t=in:st=0:d=3,afade=t=out:st=17:d=3", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "output.mp4"};
+
+try {
+    FFmpeg.execute(cmd);
+} catch (FFmpegCommandAlreadyRunningException e) {
+    // Handle the exception
+}
+
+
+This code assumes that you have already set up FFmpeg in your Android Studio project. If you haven't, you can refer to the FFmpeg documentation for Android to learn how to do it.
+
+***************************************************
+
+To trim a video, boost its volume by 3x, and add fade-in and fade-out effects to its audio only using ffmpeg in Android Studio, you can use the following command:
+
+String[] cmd = {"-i", "input.mp4", "-ss", "00:00:10", "-to", "00:00:20", "-map", "0:v", "-map", "0:a", "-af", "volume=3.0,afade=t=in:st=0:d=3,afade=t=out:st=17:d=3", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "output.mp4"};
+
+
+Trim and fade video.
+
+
+Jivanlal Bhavsar
+How to trim video and add fade in effect to its audio using ffmpeg in android studio?
+
+To trim a video and add a fade-in effect to its audio using ffmpeg in Android Studio, you can use the following command:
+
+javascript
+Copy code
+String[] cmd = {"-i", "input.mp4", "-ss", "00:00:10", "-to", "00:00:20", "-vf", "fade=in:0:30", "-af", "afade=t=in:ss=0:d=3", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "output.mp4"};
+Here is a breakdown of the command:
+
+-i: Specifies the input file.
+-ss: Specifies the start time of the trimmed video.
+-to: Specifies the end time of the trimmed video.
+-vf: Specifies the video filter. fade=in:0:30 creates a fade-in effect for the video.
+-af: Specifies the audio filter. afade=t=in:ss=0:d=3 creates a fade-in effect for the audio. ss specifies the start time of the fade-in effect, and d specifies the duration.
+-c:v: Specifies the video codec. copy copies the video codec from the input file.
+-c:a: Specifies the audio codec. aac specifies the AAC audio codec.
+-b:a: Specifies the audio bitrate. 256k specifies a bitrate of 256 kbps.
+output.mp4: Specifies the output file.
+To execute this command in Android Studio, you can use the following code:
+
+javascript
+Copy code
+String[] cmd = {"-i", "input.mp4", "-ss", "00:00:10", "-to", "00:00:20", "-vf", "fade=in:0:30", "-af", "afade=t=in:ss=0:d=3", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "output.mp4"};
+
+try {
+    FFmpeg.execute(cmd);
+} catch (FFmpegCommandAlreadyRunningException e) {
+    // Handle the exception
+}
+This code assumes that you have already set up FFmpeg in your Android Studio project. If you haven't, you can refer to the FFmpeg documentation for Android to learn how to do it.
+
+
+
+
+Jivanlal Bhavsar
+How to cut video and apply fadein and fadeout effect only to its audio using ffmpeg in android studio?
+
+To cut a video and apply fade-in and fade-out effects only to its audio using ffmpeg in Android Studio, you can use the following command:
+
+javascript
+Copy code
+String[] cmd = {"-i", "input.mp4", "-ss", "00:00:10", "-to", "00:00:20", "-map", "0:v", "-map", "0:a", "-af", "afade=t=in:st=0:d=3,afade=t=out:st=17:d=3", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "output.mp4"};
+Here is a breakdown of the command:
+
+-i: Specifies the input file.
+-ss: Specifies the start time of the trimmed video.
+-to: Specifies the end time of the trimmed video.
+-map: Specifies which streams to include in the output. -map 0:v includes the video stream from the input file, and -map 0:a includes the audio stream from the input file.
+-af: Specifies the audio filter. afade=t=in:st=0:d=3 creates a fade-in effect for the audio starting at 0 seconds and lasting 3 seconds, and afade=t=out:st=17:d=3 creates a fade-out effect for the audio starting at 17 seconds and lasting 3 seconds.
+-c:v: Specifies the video codec. copy copies the video codec from the input file.
+-c:a: Specifies the audio codec. aac specifies the AAC audio codec.
+-b:a: Specifies the audio bitrate. 256k specifies a bitrate of 256 kbps.
+output.mp4: Specifies the output file.
+To execute this command in Android Studio, you can use the following code:
+
+javascript
+Copy code
+String[] cmd = {"-i", "input.mp4", "-ss", "00:00:10", "-to", "00:00:20", "-map", "0:v", "-map", "0:a", "-af", "afade=t=in:st=0:d=3,afade=t=out:st=17:d=3", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "output.mp4"};
+
+try {
+    FFmpeg.execute(cmd);
+} catch (FFmpegCommandAlreadyRunningException e) {
+    // Handle the exception
+}
+This code assumes that you have already set up FFmpeg in your Android Studio project. If you haven't, you can refer to the FFmpeg documentation for Android to learn how to do it.
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------
+
+Trim video and boost volume by 3x and add fade in, fade out effect to its audio only using ffmpeg in android studio programmatically.
+
+To trim a video, boost its volume by 3x, and add fade-in and fade-out effects to its audio only using ffmpeg in Android Studio, you can use the following command:
+
+javascript
+Copy code
+String[] cmd = {"-i", "input.mp4", "-ss", "00:00:10", "-to", "00:00:20", "-map", "0:v", "-map", "0:a", "-af", "volume=3.0,afade=t=in:st=0:d=3,afade=t=out:st=17:d=3", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "output.mp4"};
+Here is a breakdown of the command:
+
+-i: Specifies the input file.
+-ss: Specifies the start time of the trimmed video.
+-to: Specifies the end time of the trimmed video.
+-map: Specifies which streams to include in the output. -map 0:v includes the video stream from the input file, and -map 0:a includes the audio stream from the input file.
+-af: Specifies the audio filter. volume=3.0 boosts the volume of the audio by 3x, afade=t=in:st=0:d=3 creates a fade-in effect for the audio starting at 0 seconds and lasting 3 seconds, and afade=t=out:st=17:d=3 creates a fade-out effect for the audio starting at 17 seconds and lasting 3 seconds.
+-c:v: Specifies the video codec. copy copies the video codec from the input file.
+-c:a: Specifies the audio codec. aac specifies the AAC audio codec.
+-b:a: Specifies the audio bitrate. 256k specifies a bitrate of 256 kbps.
+output.mp4: Specifies the output file.
+To execute this command in Android Studio, you can use the following code:
+
+String[] cmd = {"-i", "input.mp4", "-ss", "00:00:10", "-to", "00:00:20", "-map", "0:v", "-map", "0:a", "-af", "volume=3.0,afade=t=in:st=0:d=3,afade=t=out:st=17:d=3", "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "output.mp4"};
+
+try {
+    FFmpeg.execute(cmd);
+} catch (FFmpegCommandAlreadyRunningException e) {
+    // Handle the exception
+}
+
+
+
+
+
